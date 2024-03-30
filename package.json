@@ -9,6 +9,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@apollo/client": "^3.9.9",
+    "graphql": "^16.8.1",
     "mongodb": "^6.5.0",
     "node-telegram-bot-api": "^0.65.1"
   }
