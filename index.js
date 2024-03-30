@@ -1,14 +1,17 @@
+
+
 const TelegramBot = require('node-telegram-bot-api');
-const token = '';
-const bot = new TelegramBot(token, { polling: true });
-
-
-
 const { MongoClient } = require("mongodb");
+const dotenv = require('dotenv');
 
-const uri = '';
-const databaseName = "production";  // Database name 
+dotenv.config(); // Load environment variables from .env file
+
+const token = process.env.telegram_token;
+const uri = process.env.mongo_uri;
+const databaseName = "production"; // Database name
 let client = null; // Variable to hold the MongoDB client instance
+
+const bot = new TelegramBot(token, { polling: true });
 
 async function connectToDatabase() {
     try {
@@ -27,16 +30,12 @@ async function fetchData() {
         const db = client.db(databaseName);
         const collection = db.collection("eventmodels");
         const ans = await collection.find({}).toArray();
-        let i = 0
+        let i = 0;
         ans.forEach((element) => {
             i++;
             console.log(`target address index:${i}`, element.address);
-
             bot.sendMessage(`${element.actionValue}`, 'Hello, this is a message from your Telegram bot.');
         });
-        //send message
-
-
     } catch (err) {
         console.error("Error fetching data:", err);
     }
