@@ -58,25 +58,26 @@ async function fetchData() {
             console.log(`target address index:${i}`, element.address);
             let data = await apolloClient.query({ query: gql(Transfer_Query) });
             let transferData = data.data.transfers;
-            let transferString = "Hey checkout this usdt transaction :\n";
+
             transferData.forEach((transfer, index) => {
+                let transferString = "Hey checkout this usdt transaction :\n";
                 console.log("transfer", transfer);
 
-                transferString += `/////////////Transfer/////////// ${index + 1}:\n`;
+                // transferString += `/////////////Transfer/////////// ${index + 1}:\n`;
                 transferString += `From: ${transfer.from}\n`;
                 transferString += `To: ${transfer.to}\n`;
                 transferString += `Amount: ${transfer.value}\n\n`;
                 // Additional details if available
                 transferString += `https://polygonscan.com/tx/${transfer.transactionHash}\n\n`;
-                transferString += `////////////////////////////////\n\n`;
-
+                // transferString += `////////////////////////////////\n\n`;
                 transferString += "\n"; // Add a newline for better readability
+                bot.sendMessage(
+                    `${element.actionValue}`,
+                    `transaction data ${transferString}`
+                );
             });
 
-            bot.sendMessage(
-                `${element.actionValue}`,
-                `transaction data ${transferString}`
-            );
+
         });
     } catch (err) {
         console.error("Error fetching data:", err);
