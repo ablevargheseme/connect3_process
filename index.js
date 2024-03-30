@@ -60,16 +60,18 @@ async function fetchData() {
             let transferData = data.data.transfers;
             let transferString = "Hey checkout this usdt transaction :\n";
             transferData.forEach((transfer, index) => {
-                console.log('transfer', transfer)
+                console.log("transfer", transfer);
 
-
-                transferString += `Transfer ${index + 1}:\n`;
+                transferString += `/////////////Transfer/////////// ${index + 1}:\n`;
                 transferString += `From: ${transfer.from}\n`;
                 transferString += `To: ${transfer.to}\n`;
-                transferString += `Amount: ${transfer.value}\n\n`
+                transferString += `Amount: ${transfer.value}\n\n`;
+                // Additional details if available
+                transferString += `https://polygonscan.com/tx/${transfer.transactionHash}\n\n`;
+                transferString += `////////////////////////////////\n\n`;
 
+                transferString += "\n"; // Add a newline for better readability
             });
-
 
             bot.sendMessage(
                 `${element.actionValue}`,
@@ -83,9 +85,6 @@ async function fetchData() {
 
 // Call fetchData every 10 seconds
 setInterval(fetchData, 10000);
-
-
-
 
 // const TelegramBot = require('node-telegram-bot-api');
 // const { MongoClient } = require("mongodb");
